@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -26,6 +27,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUser(String userId) {
-        return userRepository.findById(userId).orElseThrow(() ->new ResourceNotFoundExcetion("user not found "));
+        return userRepository.findById(userId).orElseThrow(() ->new ResourceNotFoundExcetion("user not found "+userId));
     }
+
+//    @Override
+//    public User deleteUser(String userId) {
+//
+//        User user = getUser(userId);
+//       userRepository.deleteById(userId);
+//          return user;
+//
+//    }
 }
