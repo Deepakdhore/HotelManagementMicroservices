@@ -39,4 +39,5 @@ public class RatingController {
     {
         return ResponseEntity.ok(service.getRatingByHotelId(HotelId));
     }
+
 }

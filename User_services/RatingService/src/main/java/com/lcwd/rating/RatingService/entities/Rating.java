@@ -1,3 +1,4 @@
+
 package com.lcwd.rating.RatingService.entities;
 
 import lombok.AllArgsConstructor;
@@ -63,5 +64,6 @@ public class Rating {
         }
 
 }
+
 
 
