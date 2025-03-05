@@ -26,7 +26,7 @@ public class HotelServiceImpl implements HotelService {
         Hotel user;
         user = hotelRepositories.findById(id).orElseThrow(()-> new ResourceNotFoundException("hotel with given id not found"));
 
-        return null;
+        return user;
     }
 
     public Hotel create(Hotel hotel)
