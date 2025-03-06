@@ -4,12 +4,12 @@ import com.lcwd.user.service.UserService.entites.Hotel;
 import com.lcwd.user.service.UserService.entites.Rating;
 import com.lcwd.user.service.UserService.entites.User;
 import com.lcwd.user.service.UserService.exceptions.ResourceNotFoundExcetion;
+import com.lcwd.user.service.UserService.external.services.HotelService;
 import com.lcwd.user.service.UserService.repositories.UserRepository;
 import com.lcwd.user.service.UserService.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -22,10 +22,11 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
-
-
     @Autowired
     private RestTemplate restTemplate;
+    @Autowired
+    private HotelService hotelService;
+
 
     private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
@@ -55,10 +56,14 @@ public class UserServiceImpl implements UserService {
 
         List<Rating> ratingList=ratings.stream().map(rating -> {
             //api call to hotel service to get the hotel
-            ResponseEntity<Hotel> forEntity;
-            forEntity = restTemplate.getForEntity("http://HOTELSERVICE/hotels/"+rating.getHotelId(), Hotel.class);
-            Hotel hotel = forEntity.getBody();
-            logger.info("response satus code broo", forEntity.getStatusCode());
+         //RestTemplate version////
+            //ResponseEntity<Hotel> forEntity;
+            //forEntity = restTemplate.getForEntity("http://HOTELSERVICE/hotels/"+rating.getHotelId(), Hotel.class);
+           //Hotel hotel = forEntity.getBody();
+           // logger.info("response satus code broo", forEntity.getStatusCode());
+
+            Hotel hotel=hotelService.getHotel((rating.getHotelId()));
+
             //set the hotel to rating
             rating.setHotel(hotel);
             //return rating
